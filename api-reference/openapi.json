@@ -20,39 +20,142 @@
   ],
   "paths": {
     "/plants": {
+          "/fabric/v4/{asset}/{assetId}/cloudevents": {
       "get": {
-        "description": "Returns all plants from the system that the user has access to",
+        "tags": [
+          "Cloud Events"
+        ],
+        "summary": "Get Cloud Events by Asset Id",
+        "description": "This API provides capability to retrieve cloud events of an asset id",
+        "operationId": "getCloudEventByAssetId",
         "parameters": [
+          {
+            "name": "asset",
+            "in": "path",
+            "description": "asset",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/CloudEventAssetType"
+            }
+          },
+          {
+            "name": "assetId",
+            "in": "path",
+            "description": "asset UUID",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/AssetId"
+            }
+          },
+          {
+            "name": "fromDateTime",
+            "in": "query",
+            "description": "Start date and time",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/StartDateTime"
+            }
+          },
+          {
+            "name": "toDateTime",
+            "in": "query",
+            "description": "End date and time",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/EndDateTime"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "offset",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/Offset"
+            }
+          },
           {
             "name": "limit",
             "in": "query",
-            "description": "The maximum number of results to return",
+            "description": "limit",
+            "required": false,
             "schema": {
-              "type": "integer",
-              "format": "int32"
+              "$ref": "#/components/schemas/Limit"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Plant response",
+            "description": "Successful operation",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Plant"
+                  "$ref": "#/components/schemas/GetCloudEventsByAssetResponse"
+                },
+                "examples": {
+                  "Example": {
+                    "$ref": "#/components/examples/get-cloud-events-by-asset-id"
                   }
                 }
               }
             }
           },
-          "400": {
-            "description": "Unexpected error",
+          "401": {
+            "description": "Unauthorized",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Error"
+                  "$ref": "#/components/schemas/ErrorList"
+                },
+                "examples": {
+                  "example": {
+                    "$ref": "#/components/examples/401"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorList"
+                },
+                "examples": {
+                  "example": {
+                    "$ref": "#/components/examples/403"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorList"
+                },
+                "examples": {
+                  "example": {
+                    "$ref": "#/components/examples/404"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorList"
+                },
+                "examples": {
+                  "example": {
+                    "$ref": "#/components/examples/500"
+                  }
                 }
               }
             }
