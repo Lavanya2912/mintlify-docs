@@ -20,8 +20,7 @@
   ],
   "paths": {
     "/plants": {
-          "/fabric/v4/{asset}/{assetId}/cloudevents": {
-      "get": {
+           "get": {
         "tags": [
           "Cloud Events"
         ],
